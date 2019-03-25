@@ -1,1 +1,3 @@
-# photostream.andersos.net
+# photos.andersos.net
+
+A stream of my photos

@@ -1,0 +1,6 @@
+# All paths
+/*
+    X-Frame-Options: DENY
+    X-Content-Type-Options: nosniff
+    X-XSS-Protection: 1; mode=block
+    Content-Security-Policy: default-src 'none'; connect-src https://api.andersos.net; frame-ancestors 'none'; base-uri 'none'; form-action 'none'; manifest-src 'self'; script-src 'sha256-SEZ+f+4YtaR/bdijHzzKms5iu5Gdz3kIVyycIMqnVxg='; style-src 'sha256-zBQauFNDIHyDHc5YvaaG8QcfxOUMcZjJV22bZD9bVz0='; img-src 'self' https://ia.media-imdb.com https://m.media-amazon.com https://images-na.ssl-images-amazon.com;

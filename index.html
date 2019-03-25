@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1, width=device-width" />
+    <meta name="theme-color" content="#2196f3" />
+    <title>Photos</title>
+    <meta name="description" content="A stream of my photos" />
+    <style>
+      body {
+        background-color: snow;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji",
+          "Segoe UI Emoji", "Segoe UI Symbol";
+        font-size: 20px;
+        color: #252525;
+        margin: 0;
+      }
+      header {
+        background-color: #2196f3;
+        height: 64px;
+        display: flex;
+        justify-content: space-between;
+        line-height: 64px;
+      }
+      header a {
+        margin-left: 20px;
+        font-size: 24px;
+        color: inherit;
+        text-decoration: none;
+      }
+      header h1 {
+        margin-top: 0;
+        margin-bottom: 0;
+        display: inline;
+        font-size: 24px;
+        font-weight: 400;
+      }
+      h2 {
+        font-size: 24px;
+        font-weight: 400;
+      }
+      .error {
+        color: #856404;
+        background-color: #fff3cd;
+        padding: 20px;
+        margin: 0;
+      }
+      .hidden {
+        display: none;
+      }
+      main {
+        text-align: center;
+      }
+      .card {
+        display: block;
+        text-decoration: none;
+        margin: 2px;
+        color: inherit;
+      }
+      .card-img {
+        object-fit: cover;
+        height: 293px;
+        width: 293px;
+      }
+      .card-body {
+        padding: 0.5rem;
+      }
+      .card-title {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .card-text {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+      .entry {
+        border: 1px solid rgba(0, 0, 0, 0.125);
+      }
+      .entry-text {
+        margin-top: 5px;
+        margin-bottom: 5px;
+        margin-left: 20px;
+      }
+      a:focus {
+        outline: solid red;
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <a href="https://api.andersos.net"><h1>Photos</h1></a>
+    </header>
+    <main><p id="error" class="error">Fetching photos...</p></main>
+    <template id="card">
+      <a class="card"> <img class="card-img" /> </a>
+      <div class="card-body">
+        <h2 class="card-title"></h2>
+        <time class="card-time"></time>
+        <p class="card-text"></p>
+      </div>
+    </template>
+    <script>
+      const error = document.getElementById("error");
+      const main = document.querySelectorAll("main")[0];
+
+      function makePhoto(photo) {
+        let newCard = document.importNode(card.content, true);
+        newCard.querySelector("a").href = `https://api.andersos.net/${
+          photo.path
+        }`;
+        if (photo.location) {
+          newCard.querySelector("h2").textContent = `${photo.username} - ${
+            photo.location
+          }`;
+        } else {
+          newCard.querySelector("h2").textContent = `${photo.username}`;
+        }
+
+        newCard.querySelector("img").src = `https://api.andersos.net/${
+          photo.path
+        }`;
+        newCard.querySelector("p").textContent = photo.caption;
+        newCard.querySelector("time").textContent = photo["taken_at"];
+        return newCard;
+      }
+
+      function addPhotos(photos) {
+        error.remove();
+        photos.map(photo => {
+          main.appendChild(makePhoto(photo));
+        });
+      }
+
+      fetch("https://api.andersos.net/photostream.json")
+        .then(response => {
+          return response.json();
+        })
+        .then(json => {
+          addPhotos(json.photos);
+        })
+        .catch(e => {
+          console.log(e);
+          error.innerHTML = "Could not fetch photos 😭";
+        });
+    </script>
+  </body>
+</html>
