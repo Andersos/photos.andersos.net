@@ -1,2 +1,2 @@
 # Redirect default Netlify subdomain to primary domain
-https://photos.netlify.com/* https://photos.andersos.net/:splat 301!
+http://wonderful-edison-45f267.netlify.com/* http://photos.andersos.net/:splat 301!
